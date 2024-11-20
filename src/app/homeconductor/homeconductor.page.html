@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>homeconductor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">homeconductor</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-button class="boton2" [routerLink]="['/login']" (click)="cerrar();">Cerrar</ion-button>
+  <h2>Lista de Viajes</h2>
+  <ion-list>
+    <ion-item *ngFor="let viaje of viajes">
+      <ion-label>
+        <h3>ID: {{ viaje.id }}</h3>
+        <p>Destino: {{ viaje.destino }}</p>
+        <p>Fecha: {{ viaje.fecha }}</p>
+        <p>Estado: {{ viaje.viaje_tomado }}</p>
+        <p>Precio: {{ viaje.usuario.precio}}</p>
+        <p>Usuario: {{ viaje.usuario.email}}</p>
+      </ion-label>
+      <ion-button (click)="tomarViaje(viaje.id)">Tomar viaje</ion-button>
+      <ion-button (click)="notomarViaje(viaje.id)">Cancelar viaje</ion-button>
+      <ion-button (click)="openMaps(viaje.destino)">Ver en Google Maps</ion-button>
+      <ion-button (click)="toggleFormularioSms(viaje.id)">Enviar SMS</ion-button>
+      
+      <!-- Formulario para enviar SMS -->
+      <form *ngIf="viajeSmsVisible === viaje.id" (ngSubmit)="sendSms(viaje.id)">
+        <ion-item>
+          <ion-label position="floating">Para</ion-label>
+          <ion-input [(ngModel)]="to" name="to" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Mensaje</ion-label>
+          <ion-input [(ngModel)]="message" name="message" required></ion-input>
+        </ion-item>
+        <ion-button expand="full" type="submit">Enviar SMS</ion-button>
+      </form>
+    </ion-item>
+  </ion-list>
+  
+</ion-content>
+
